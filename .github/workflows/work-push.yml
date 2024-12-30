@@ -1,0 +1,47 @@
+name: "work-push"
+
+on: push
+
+jobs:
+    test:
+        name: Test lint, tsc, build
+
+        runs-on: ubuntu-latest
+
+        steps:
+            # 코드 체크아웃
+            - uses: actions/checkout@v4
+
+            # pnpm 설치
+            - name: Install pnpm
+              uses: pnpm/action-setup@v4
+              with:
+                  version: ${{ secrets.NODE_VERSION }}
+                  run_install: false
+
+            # 캐시 pnpm store
+            - name: Cache pnpm store
+              uses: actions/cache@v3
+              id: pnpm-cache
+              with:
+                  path: ~/.pnpm-store
+                  key: pnpm-store-${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+                  restore-keys: |
+                      pnpm-store-${{ runner.os }}-
+
+            # 의존성 설치
+            - name: Install Dependencies
+              if: steps.pnpm-cache.outputs.cache-hit != 'true'
+              run: pnpm install
+
+            # 린트 실행
+            - run: pnpm run lint
+              if: ${{ always() }}
+
+            # 타입스크립트 컴파일 실행
+            - run: pnpm run tsc
+              if: ${{ always() }}
+
+            # 빌드 실행
+            - run: pnpm run build
+              if: ${{ always() }}
