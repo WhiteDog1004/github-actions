@@ -16,7 +16,7 @@ jobs:
             - name: Install pnpm
               uses: pnpm/action-setup@v4
               with:
-                  version: ${{ secrets.NODE_VERSION }}
+                  version: 9.0.6
                   run_install: false
 
             # 캐시 pnpm store
