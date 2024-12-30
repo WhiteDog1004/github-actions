@@ -6,7 +6,7 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "tsc": "echo tsc",
+    "tsc": "echo 타입스크립트 테스트",
     "lint": "next lint"
   },
   "dependencies": {

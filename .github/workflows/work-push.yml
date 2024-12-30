@@ -31,7 +31,7 @@ jobs:
 
             # 의존성 설치
             - name: Install Dependencies
-              if: steps.pnpm-cache.outputs.cache-hit != 'true'
+              if: steps.cache.outputs.cache-hit != 'true'
               run: pnpm install
 
             # 린트 실행
