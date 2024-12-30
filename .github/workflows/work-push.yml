@@ -3,7 +3,7 @@ name: "work-push"
 on: push
 
 jobs:
-    test:
+    BuildAndPush:
         name: Workflows Build
 
         runs-on: ubuntu-latest
